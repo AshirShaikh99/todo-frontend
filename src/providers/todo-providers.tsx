@@ -12,13 +12,13 @@ export function TodoProvider({ children }: { children: React.ReactNode }) {
   const fetchTodos = async (userId: string) => {
     setIsLoading(true);
     try {
-      const response = await axios.get(
-        `http://localhost:8000/api/v1/todos?id=${userId}`
-      );
+      const response = await api.get(`/todos?id=${userId}`);
+      console.log("FETCHED TODOS", response.data);
       setTodos(response.data);
+      return response.data;
     } catch (err) {
-      console.error(err);
       setError("Failed to fetch todos");
+      throw err;
     } finally {
       setIsLoading(false);
     }

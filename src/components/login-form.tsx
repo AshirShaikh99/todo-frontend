@@ -12,9 +12,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/context/auth-context";
-import axios from "axios";
 import { useState } from "react";
 import { Icons } from "@/lib/icons";
+import { useToast } from "@/hooks/use-toast";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -23,7 +23,9 @@ const loginSchema = z.object({
 
 export function LoginForm() {
   const { login } = useAuth();
+  const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -35,14 +37,20 @@ export function LoginForm() {
   async function onSubmit(values: z.infer<typeof loginSchema>) {
     try {
       setIsLoading(true);
-      const response = await axios.post(
-        "http://localhost:8000/api/v1/auth/login",
-        values
-      );
-      console.log("Login token:", response.data.token);
-      login(response.data.token);
+      await login(values.email, values.password);
+
+      toast({
+        title: "Success",
+        description: "Logged in successfully",
+        duration: 3000,
+      });
     } catch (error) {
       console.error("Login failed:", error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to login. Please check your credentials.",
+      });
     } finally {
       setIsLoading(false);
     }

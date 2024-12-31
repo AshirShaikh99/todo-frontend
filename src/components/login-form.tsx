@@ -13,6 +13,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/context/auth-context";
 import axios from "axios";
+import { useState } from "react";
+import { Icons } from "@/lib/icons";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -21,6 +23,7 @@ const loginSchema = z.object({
 
 export function LoginForm() {
   const { login } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -31,6 +34,7 @@ export function LoginForm() {
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
     try {
+      setIsLoading(true);
       const response = await axios.post(
         "http://localhost:8000/api/v1/auth/login",
         values
@@ -39,6 +43,8 @@ export function LoginForm() {
       login(response.data.token);
     } catch (error) {
       console.error("Login failed:", error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -90,8 +96,16 @@ export function LoginForm() {
             <Button
               type="submit"
               className="w-full bg-white text-black hover:bg-gray-200"
+              disabled={isLoading}
             >
-              Sign In
+              {isLoading ? (
+                <>
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                  Signing in...
+                </>
+              ) : (
+                "Sign In"
+              )}
             </Button>
           </form>
         </Form>

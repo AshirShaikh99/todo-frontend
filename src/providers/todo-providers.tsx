@@ -57,11 +57,13 @@ export function TodoProvider({ children }: { children: React.ReactNode }) {
   const deleteTodo = async (id: string) => {
     setIsLoading(true);
     try {
-      await axios.delete(`http://localhost:8000/api/v1/todos/${id}`);
+      const response = await api.delete(`/todos/${id}`);
+      console.log("DELETED TODO", response.data);
       setTodos((prev) => prev.filter((t) => t.id !== id));
+      return response.data;
     } catch (err) {
-      console.error(err);
       setError("Failed to delete todo");
+      throw err;
     } finally {
       setIsLoading(false);
     }

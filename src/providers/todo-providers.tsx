@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { TodoContext } from "../context/todo-context";
 import { Todo, TodoContextType } from "../context/todo-types";
-import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
 import api from "@/services/api";
 
 export function TodoProvider({ children }: { children: React.ReactNode }) {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const fetchTodos = async (userId: string) => {
     setIsLoading(true);
@@ -62,6 +63,11 @@ export function TodoProvider({ children }: { children: React.ReactNode }) {
       const response = await api.delete(`/todos/${id}`);
       console.log("DELETED TODO", response.data);
       setTodos((prev) => prev.filter((t) => t.id !== id));
+      toast({
+        variant: "destructive",
+        title: "Deleted",
+        description: "Todo deleted successfully",
+      });
       return response.data;
     } catch (err) {
       setError("Failed to delete todo");

@@ -16,13 +16,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 
 export interface Todo {
@@ -114,7 +107,7 @@ export function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 p-4 flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 p-4 flex items-center justify-center fixed inset-0">
       <div className="w-full max-w-4xl bg-gray-800 rounded-xl shadow-2xl overflow-hidden">
         <div className="sticky top-0 z-10 bg-gray-800/95 backdrop-blur supports-[backdrop-filter]:bg-gray-800/75 p-6">
           <h1 className="text-3xl font-bold text-white text-center mb-6">Tasks</h1>
@@ -149,7 +142,7 @@ export function Dashboard() {
                     onChange={(e) => setNewTodo({ ...newTodo, dueDate: e.target.value })}
                     className="bg-gray-700 text-white border-gray-600"
                   />
-                  <Button onClick={handleCreateTodo} className="w-full bg-blue-600 hover:bg-blue-700">
+                  <Button onClick={handleCreateTodo} className="w-full">
                     Create Task
                   </Button>
                 </div>
@@ -244,6 +237,7 @@ export function Dashboard() {
                   onCheckedChange={(checked) => 
                   setEditingTodo({ ...editingTodo, completed: checked === true })
                   }
+                  className="bg-gray-700 text-white border-gray-600"
                 />
                 <label
                   htmlFor="completed"
@@ -252,7 +246,7 @@ export function Dashboard() {
                   Completed
                 </label>
                 </div>
-              <Button onClick={handleUpdateTodo} className="w-full bg-blue-600 hover:bg-blue-700">
+              <Button onClick={handleUpdateTodo} className="w-full">
                 Update Task
               </Button>
             </div>

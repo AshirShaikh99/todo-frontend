@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { Trash2, Plus, CheckCircle, Circle, Pencil } from 'lucide-react';
+import { Trash2, Plus, Pencil } from 'lucide-react';
 import { useTodo } from "@/context/todo-context";
 import {
   Dialog,
@@ -34,6 +34,7 @@ export function Dashboard() {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
+  
 
   const [newTodo, setNewTodo] = useState<Omit<Todo, 'id' | 'completed' | 'status'>>({
     title: "",

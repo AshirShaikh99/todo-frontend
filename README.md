@@ -1,50 +1,47 @@
-# React + TypeScript + Vite
+# Component Overview
+## The Dashboard component is a comprehensive task management interface built with React, featuring a modern dark theme and robust functionality for managing todos.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Core Features
+- State Management
+- Uses Redux for user state management
+- Implements context-based todo management via useTodo hook
+- Maintains local state for dialog controls and form data
 
-Currently, two official plugins are available:
+# Todo Operations
+- Create new todos with title, description, and due date
+- Update existing todos including status and completion
+- Delete todos
+- View todos
+- Mark todos as complete/incomplete
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Dialog System
+- Create Todo Dialog
+- Edit Todo Dialog
+- Both implement form controls for todo management
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+# Toast Notifications
 
-- Configure the top-level `parserOptions` property like this:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+# How to setup?
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+# Setup SQL Database
+- Install SQL Server
+- Create Database
+- Add DB Name to your .env of your Backend 
+- Make sure SQL Server is running locally.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## First Step: Run Backend 
+- Clone the repo from backend https://github.com/AshirShaikh99/hiring-task
+- npm install and install the dependencies for express.js
+- run backend using npm run dev
+- Copy and Paste the url of host and paste to frontend.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Second Step: Run Frontend
+- Clone the repo
+- Switch to master branch
+- npm install
+- npm run dev
+
+
+

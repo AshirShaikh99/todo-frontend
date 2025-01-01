@@ -13,7 +13,7 @@ export function TodoProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true);
     try {
       const response = await api.get(`/todos?id=${userId}`);
-      console.log("FETCHED TODOS", response.data);
+    
       setTodos(response.data);
       return response.data;
     } catch (err) {
@@ -42,7 +42,9 @@ export function TodoProvider({ children }: { children: React.ReactNode }) {
   const updateTodo = async (id: string, todo: Partial<Todo>) => {
     setIsLoading(true);
     try {
-      await axios.put(`http://localhost:8000/api/v1/todos/${id}`, todo);
+      const { title, description, completed } = todo;
+      await api.put(`/todos/${id}`, { title, description, completed });
+      console.log("UPDATING TODO", todo);
       setTodos((prev) =>
         prev.map((t) => (t.id === id ? { ...t, ...todo } : t))
       );

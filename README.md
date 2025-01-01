@@ -37,6 +37,19 @@
 - run backend using npm run dev
 - Copy and Paste the url of host and paste to frontend.
 
+#### Setup .env to backend
+
+DB_TYPE="mysql"
+DB_HOST="localhost"        # Remove the port from host
+DB_USERNAME="root"
+DB_PASSWORD=""
+DB_PORT=3306
+DB_NAME=""
+PORT=8000
+SECRET_KEY="todo_list"
+EXPIRE_TIME=3600
+
+
 ## Second Step: Run Frontend
 - Clone the repo
 - Switch to master branch

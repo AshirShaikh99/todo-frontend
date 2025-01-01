@@ -1,3 +1,4 @@
+'use client'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -12,7 +13,8 @@ import {
 } from "./ui/form";
 import { Input } from "./ui/input";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useAuth } from "@/context/auth-context";
+import { useToast } from "@/hooks/use-toast";
 
 const registerSchema = z.object({
   username: z.string().min(3, "Username must be at least 3 characters"),
@@ -22,6 +24,9 @@ const registerSchema = z.object({
 
 export function RegisterForm() {
   const navigate = useNavigate();
+  const { register } = useAuth();
+  const { toast } = useToast();
+
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -33,15 +38,23 @@ export function RegisterForm() {
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
     try {
-      await axios.post("http://localhost:8000/api/v1/auth/register", values);
+      await register(values.username, values.email, values.password);
+      toast({
+        title: "Success",
+        description: "Account created successfully",
+      });
       navigate("/login");
     } catch (error) {
-      console.error("Registration failed:", error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: error instanceof Error ? error.message : "Registration failed",
+      });
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#020817]">
+    <div className="min-h-screen flex items-center justify-center bg-[#020817] fixed inset-0" >
       <div className="w-[400px] p-8 rounded-lg bg-[#030a1c] border border-[#1d283a]">
         <h1 className="text-2xl font-bold mb-2 text-white">Register</h1>
         <p className="text-gray-400 mb-6">
